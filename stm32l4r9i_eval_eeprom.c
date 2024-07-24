@@ -202,6 +202,10 @@ uint32_t BSP_EEPROM_WritePage(uint8_t* pBuffer, uint16_t WriteAddr, uint8_t* Num
     status = EEPROM_FAIL;
   }
 
+  /* Waiting for EEPROM internal write cycle duration (5 ms): max delay required by
+  the M24M01 specification to ensure that the previous EEPROM access is finished */
+  HAL_Delay(5);
+
   if(BSP_EEPROM_WaitEepromStandbyState() != EEPROM_OK)
   {
     return EEPROM_FAIL;
